@@ -1,5 +1,8 @@
-
 #include "UserInput.h"
+
+UserInput::UserInput(int argc, char *argv[]){
+	validateInput(argc, argv);
+}
 
 void UserInput::showInput(int argc, char *argv[]){
 	std::cout << "Command-line arguments: " << std::endl;
@@ -58,8 +61,6 @@ void UserInput::validateInput(int argc, char *argv[]){
 		case 5:
 			// OuputFile (.pcm)
 			if (argv[c] != NULL)this->outputFile = argv[c];
-
-
 		}
 	}
 }
@@ -74,9 +75,25 @@ void UserInput::showHelpInfo(){
 
 void UserInput::printData(){
 	std::cout << "Number of threads:	"	<< this->threads	<< std::endl;
-	std::cout << "Value of bass:		"		<< this->bass		<< std::endl;
+	std::cout << "Value of bass:		"	<< this->bass		<< std::endl;
 	std::cout << "Value of treble:	"		<< this->treble		<< std::endl;
-	std::cout << "InputFile:		"			<< this->inputFile	<< std::endl;
-	std::cout << "OutputFile:		"			<< this->outputFile	<< std::endl;
+	std::cout << "InputFile:		"		<< this->inputFile	<< std::endl;
+	std::cout << "OutputFile:		"		<< this->outputFile	<< std::endl;
 
+}
+
+int UserInput::getNumberOfThreads(){
+	return this->threads;
+}
+int UserInput::getValueOfBass(){
+	return this->bass;
+}
+int UserInput::getValueOfTreble(){
+	return this->treble;
+}
+std::string UserInput::getInputFile(){
+	return this->inputFile;
+}
+std::string UserInput::getOutputFile(){
+	return this->outputFile;
 }

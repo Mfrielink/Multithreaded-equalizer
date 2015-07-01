@@ -3,11 +3,7 @@
 
 int main(int argc, char *argv[]){
 
-	UserInput inputHandler;
-
-	inputHandler.showInput(argc, argv);
-
-	inputHandler.validateInput(argc, argv);
+	UserInput inputHandler(argc, argv);
 
 	inputHandler.printData();
 	return 0;
