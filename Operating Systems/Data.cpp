@@ -51,16 +51,23 @@ void Data::readFile(string filename){
 	signed short a;
 	tmp = Block();
 	tmp.setOrderNumber(this->blockCount);
+
+	
+	std::string fileName = filename;
+	std::cout << "filename: " << fileName << endl; //you_and_i.pcm
+
+
 	fstream mystream;
-	mystream.open(filename, fstream::binary | fstream::in | fstream::out);
+	mystream.open(fileName, fstream::binary | fstream::in | fstream::out);
+
 
 	if (!mystream){
-		cout << "file niet aanwezig! " << endl;
+		std::cout << "file niet aanwezig! " << endl;
 	}
 	else{
 		//read something
-		cout << "Opened file: " << filename << endl;
-		cout << "Start reading file and filling blocks" << endl;
+		std::cout << "Opened file: " << fileName << endl;
+		std::cout << "Start reading file and filling blocks" << endl;
 
 		while(mystream.read((char *)&a, sizeof(signed short))){
 			
@@ -82,11 +89,11 @@ void Data::readFile(string filename){
 		prebuffer.put(tmp);
 		this->blockCount++;
 	}
-	cout << "Finished reading file, " << this->blockCount << " filled." << endl;
+	std::cout << "Finished reading file, " << this->blockCount << " filled." << endl;
 }
 
 void Data::initThread(int threadAmount, string filename){
-	cout << "Initializing Threads. " << threadAmount << " Threads will be using for equalizing" << endl;
+	std::cout << "Initializing Threads. " << threadAmount << " Threads will be using for equalizing" << endl;
 	thread fileRead = thread(&Data::readFile, this, filename);
 	int blocks = 0;
 	int zulu = 1;
@@ -108,7 +115,7 @@ void Data::initThread(int threadAmount, string filename){
 		}
 	}
 	fileRead.join();
-	cout << "Size Postbuffer:  " << postbuffer.getQueueSize() << endl; //2678
+	std::cout << "Size Postbuffer:  " << postbuffer.getQueueSize() << endl; //2678
 }
 
 void Data::trebleCoefficients(int intensity, double *b0, double *b1, double *b2, double *a1, double *a2)
@@ -209,15 +216,15 @@ void Data::writeFile(string filename){
 	int error = 0;
 	for (int x = 0; x < size; x++){ //PLACING CHECK
 		if (x != blockArray[x].getOrderNumber()){
-			cout << "False! position " << x << " with blockNumber: " << blockArray[x].getOrderNumber() << endl;
+			std::cout << "False! position " << x << " with blockNumber: " << blockArray[x].getOrderNumber() << endl;
 		}
 	}
 	if (error != 0){
-		cout << error << " errors in placing";
+		std::cout << error << " errors in placing";
 	}
 	else{
-		cout << "No errors in placing order" << endl;
-		cout << "Writing File: " << filename << endl;
+		std::cout << "No errors in placing order" << endl;
+		std::cout << "Writing File: " << filename << endl;
 
 		//FILLING FILE
 		ofstream outfile(filename, ofstream::binary);
@@ -227,7 +234,7 @@ void Data::writeFile(string filename){
 				outfile.write((char *)&sample, sizeof(signed short));
 			}
 		}
-		cout << "Finished writing File: " << filename << endl;
+		std::cout << "Finished writing File: " << filename << endl;
  	}
 
 
